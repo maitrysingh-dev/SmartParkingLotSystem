@@ -13,69 +13,17 @@ Class Diagram
 Complete flow of project (Vehicle Arrives)
 -------------------------------------------
 
-Vehicle Arrives
+Vehicle Arrives  --> ParkingService.checkIn() --> ParkingSpotManagerService.getAvailableSpot()
 
-        │
+--> ParkingSpotManagerService.allocateSpot() --> ParkingSpot.occupy()
 
-        ▼
-
-ParkingService.checkIn()
-
-        │
-
-        ▼
-
-ParkingSpotManagerService.allocateSpot()
-
-        │
-
-        ▼
-
-ParkingSpot.occupy()
-
-        │
-
-        ▼
-
-ParkingTransactionService.createTransaction()
-
-        │
-
-        ▼
-
-ParkingTransaction Returned
+--> ParkingTransactionService.createTransaction() --> ParkingTransaction Returned
 
 (Vehicle Exits)
 ----------------
 
-ParkingService.checkOut()
+ParkingService.checkOut() --> TransactionService.getActiveTransaction()
 
-        │
+--> HourlyFeeStrategy.calculateFee() --> Transaction.completeTransaction()
 
-        ▼
-
-TransactionService.getActiveTransaction()
-
-        │
-
-        ▼
-
-HourlyFeeStrategy.calculateFee()
-
-        │
-
-        ▼
-
-Transaction.completeTransaction()
-
-        │
-
-        ▼
-
-SpotManager.releaseSpot()
-
-        │
-
-        ▼
-
-ParkingSpot.release()
+--> SpotManager.releaseSpot() --> ParkingSpot.release()
